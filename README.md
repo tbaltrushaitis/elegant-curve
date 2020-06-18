@@ -11,7 +11,7 @@
 <!-- # Linux Configs :: Stack of useful .bashrc configs for OS Linux shell # -->
 
 <p align="center">
-  <h4 align="center">Task from Schools Programming Olympiad</h4>
+  <h4 align="center">Реализация алгоритма построения <a href="https://en.wikipedia.org/wiki/Cardioid" target="blank">кардиоиды</a> хордами</h4>
 </p>
 
 <!-- <p align="center">
