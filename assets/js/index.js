@@ -1,8 +1,10 @@
 
-const Chords = 36
+const Parts  = 36
 const Factor = 2
 const Rounds = 1
 const StartAngle = 0
+
+const Points = Parts * Factor
 const PI = Math.PI    // 3.1415
 
 const Colors = [
@@ -18,19 +20,20 @@ const Colors = [
 let title = 'Elegant Curve'.toUpperCase()
 console.group(title);
 
-const b = document.body
-const canvas = document.querySelector('#cvs-1')
+const d = document
+const b = d.body
+const canvas = d.querySelector('#cvs-1')
 const ctx = canvas.getContext('2d')
 
-let cw = canvas.width = b.clientWidth * 0.95
-let ch = canvas.height = b.clientHeight * 0.95
+let cw = canvas.width  = 0.95 * b.clientWidth
+let ch = canvas.height = 0.95 * b.clientHeight
 
 const XC = cw / 2
 const YC = ch / 2
 
 let Radius    = Math.round(Math.min(cw, ch) * 0.90 / 2)
 let AngleSkip = StartAngle * PI / 180
-let AngleStep = 2 * PI / Chords
+let AngleStep = 2 * PI / Parts
 
 let arrPoints = [];
 
@@ -38,10 +41,11 @@ let arrPoints = [];
 
 function init () {
 
-  console.info(`Chords = [${Chords}]`)
-  console.info(`Radius = [${Radius}]`)
-  console.info(`AngleSkip = [${AngleSkip}]`)
-  console.info(`AngleStep = [${AngleStep}]`)
+  console.log(`Rounds = [${Rounds}]`)
+  console.log(`Points = [Parts * Factor] = [${Parts} * ${Factor}] = [${Points}]`)
+  console.log(`Radius = [${Radius}]`)
+  console.log(`AngleSkip = [${AngleSkip}]`)
+  console.log(`AngleStep = [${AngleStep}]`)
 
   genPoints()
   drawBase()
@@ -52,7 +56,7 @@ function start () {
   drawChords()
 }
 
-let DataUrl = canvas.toDataURL()
+// let DataUrl = canvas.toDataURL()
 // console.log(`DataUrl = [${DataUrl}]`);
 
 // -------------------------------------------------------------------------  ##
@@ -66,11 +70,11 @@ function pset (ang, r) {
 // -------------------------------------------------------------------------  ##
 
 function genPoints () {
-  for (let ic = 1; ic <= Chords; ic++) {
+  for (let ic = 1; ic <= Points; ic++) {
     let curAngle = AngleSkip + ic * AngleStep
     arrPoints.push( pset(curAngle, Radius) )
   }
-  console.log('POINTS LIST:');
+  console.log(`POINTS LIST (${Points}):`);
   console.dir(arrPoints);
 }
 
@@ -90,7 +94,7 @@ function drawBase () {
   //  Draw SMALL circle at the CENTER
   ctx.beginPath()
   ctx.arc(XC, YC, 5, 0, 2 * PI)
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.8)'
+  ctx.fillStyle = 'rgba(250, 0, 0, 0.8)'
   ctx.fill()
   ctx.closePath()
 
@@ -104,38 +108,38 @@ function drawSectors () {
   let [xs, ys] = pset(AngleSkip, Radius)
   ctx.moveTo(XC + xs, YC + ys)
 
-  for (let ic = 0; ic < arrPoints.length; ic++) {
+  for (let ic = 0; ic < Parts; ic++) {
     let [xi, yi] = arrPoints[ic]
     ctx.lineTo(XC + xi, YC + yi)
-    ctx.lineWidth = 3
+    ctx.lineWidth = 2
+    ctx.lineCap = 'round';
     ctx.strokeStyle = 'blue'
     ctx.stroke()
 
     ctx.lineWidth = 1
     ctx.font = 'bold 20px Calibri'
-    ctx.lineCap = 'round';
-    ctx.fillStyle = Colors[ ic % Colors.length ]
     // ctx.textAlign = 'left'
-    ctx.fillText(1 + ic, XC + xi + 0.5 * (Chords - ic), YC + yi + 0.2 * (ic - Chords))
+    ctx.fillStyle = Colors[ ic % Colors.length ]
+    ctx.fillText(1 + ic, XC + xi + 0.5 * (Parts - ic), YC + yi + 0.2 * (ic - Parts))
   }
 
   ctx.closePath()
 }
 
 // -------------------------------------------------------------------------  ##
-//  CHORDS
+//  CHORDES
 // -------------------------------------------------------------------------  ##
 function drawChords () {
-  let title = `Chords List (${Chords}):`
+  let title = `CHORDES List (${Parts * Rounds}):`
   console.groupCollapsed(title);
 
-  ctx.lineWidth = 3
+  ctx.lineWidth = 2
   ctx.strokeStyle = 'white'
   // ctx.strokeStyle = Colors[ ik % Colors.length ]
 
-  for (let ic = 1; ic <= arrPoints.length * Rounds; ic++) {
-    let ik1 = (ic - 1) % Chords
-    let ik2 = (ic * Factor - 1) % Chords
+  for (let ic = 1; ic <= Parts * Rounds; ic++) {
+    let ik1 = (ic - 1) % Parts
+    let ik2 = (ic * Factor - 1) % Parts
     let [x1, y1] = arrPoints[ik1]
     let [x2, y2] = arrPoints[ik2]
 
@@ -145,7 +149,7 @@ function drawChords () {
     ctx.stroke()
     ctx.closePath()
 
-    console.log(`[${ic}]: [${ic} to ${ic * Factor}] === LINE (${x1}, ${y1}) - (${x2}, ${y2})`)
+    console.log(`[${ic}]: [${ic} to ${ic * Factor}] === (${x1}, ${y1}) - (${x2}, ${y2})`)
   }
 
   console.groupEnd(title);
