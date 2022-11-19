@@ -1,5 +1,5 @@
 
-const Parts  = 36
+const Parts  = 72
 const Factor = 2
 const Rounds = 1
 const StartAngle = 0
@@ -135,6 +135,7 @@ function drawChords () {
 
   ctx.lineWidth = 2
   ctx.strokeStyle = 'white'
+  // ctx.strokeStyle = 'yellow'
   // ctx.strokeStyle = Colors[ ik % Colors.length ]
 
   for (let ic = 1; ic <= Parts * Rounds; ic++) {
