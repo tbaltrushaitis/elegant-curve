@@ -17,10 +17,14 @@
 <h4 align="center">Реализация алгоритма построения <a href="https://en.wikipedia.org/wiki/Cardioid" target="blank">кардиоиды</a> хордами</h4>
 
 <p align="center">
+  <code>canvas</code>
   <code>programming</code>
   <code>algorithms</code>
   <code>olympic</code>
   <code>development</code>
+  <code>canvas2d</code>
+  <code>geometry</code>
+  <code>geometric-algorithms</code>
 </p>
 
 ---
